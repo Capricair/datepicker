@@ -1,0 +1,97 @@
+@mixin clearfix{
+    content: "";
+    clear: both;
+    line-height: 0;
+    overflow: hidden;
+    visibility: hidden;
+    display: table;
+    zoom: 1;
+}
+.datepicker-container *{
+    margin: 0;
+    padding: 0;
+    -webkit-user-select: none;
+    user-select: none;
+    text-decoration: none;
+}
+.datepicker-container{
+    color: #333 !important;
+    font-size: 16px;
+    font-family: "Helvetica Neue", Helvetica, Microsoft Yahei, Hiragino Sans GB, WenQuanYi Micro Hei, sans-serif;
+    position: fixed;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    z-index: 9999;
+    transition: transform .5s ease;
+    transform: translate3d(0, 100%, 0);
+}
+.datepicker-open{
+    .datepicker-container{
+        transform: translate3d(0, 0, 0);
+    }
+}
+.datepicker-head{
+    //padding: 10px;
+    box-sizing: border-box;
+    text-align: right;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    background-color: #F0F1F3;
+}
+.datepicker-head > a{
+    color: #0F40B7 !important;
+    padding: 10px;
+    display: inline-block;
+    &:last-child{
+        margin-right: 10px;
+    }
+}
+.datepicker-body{
+    padding: 20px 0;
+    background: linear-gradient(top, darken(#D2D5DA, 10%), #D2D5DA, darken(#D2D5DA, 10%));
+    &:after{
+        @include clearfix;
+    }
+    .datepicker-year, .datepicker-month, .datepicker-day{
+        position: relative;
+        &:before, &:after{
+            content: '';
+            width: 70%;
+            height: 2px;
+            box-sizing: border-box;
+            background-color: #5696e6;
+            position: absolute;
+            left: 0;
+            right: 0;
+            margin: auto;
+        }
+        &:before{
+            top: 68px;
+        }
+        &:after{
+            top: 105px;
+        }
+        & > ul{
+            position: relative;
+            //transition: top 0.3s ease;
+        }
+    }
+}
+
+.datepicker-year, .datepicker-month, .datepicker-day{
+    float: left;
+    height: 175px;
+    overflow-y: hidden;
+    text-align: center;
+    ul > li{
+        line-height: 35px;
+    }
+}
+.datepicker-year{
+    width: 34%;
+}
+
+.datepicker-month, .datepicker-day{
+    width: 33%;
+}
