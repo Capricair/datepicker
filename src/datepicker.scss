@@ -49,7 +49,7 @@
 }
 .datepicker-body{
     padding: 20px 0;
-    background: linear-gradient(top, darken(#D2D5DA, 10%), #D2D5DA, darken(#D2D5DA, 10%));
+    background: linear-gradient(top, #D2D5DA, darken(#D2D5DA, 20%), #D2D5DA);
     &:after{
         @include clearfix;
     }
