@@ -15,8 +15,8 @@
   left: 0;
   bottom: 0;
   z-index: 9999;
-  -webkit-transition: -webkit-transform .5s ease;
-          transition: transform .5s ease;
+  -webkit-transition: -webkit-transform .4s ease;
+          transition: transform .4s ease;
   -webkit-transform: translate3d(0, 100%, 0);
           transform: translate3d(0, 100%, 0);
 }
@@ -51,6 +51,9 @@
   background: -webkit-gradient(linear, left top, left bottom, from(#D2D5DA), color-stop(#9aa1ac), to(#D2D5DA));
   background: -webkit-linear-gradient(top, #D2D5DA, #9aa1ac, #D2D5DA);
   background: linear-gradient(top, #D2D5DA, #9aa1ac, #D2D5DA);
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
 }
 
 .datepicker-body:after {
@@ -95,6 +98,9 @@
 }
 
 .datepicker-year, .datepicker-month, .datepicker-day {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+          flex: 1;
   float: left;
   height: 175px;
   overflow-y: hidden;

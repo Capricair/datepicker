@@ -23,7 +23,7 @@
     left: 0;
     bottom: 0;
     z-index: 9999;
-    transition: transform .5s ease;
+    transition: transform .4s ease;
     transform: translate3d(0, 100%, 0);
 }
 .datepicker-open{
@@ -51,6 +51,7 @@
     padding: 20px 0;
     cursor: -webkit-grab;
     background: linear-gradient(top, #D2D5DA, darken(#D2D5DA, 20%), #D2D5DA);
+    display: flex;
     &:after{
         @include clearfix;
     }
@@ -81,6 +82,7 @@
 }
 
 .datepicker-year, .datepicker-month, .datepicker-day{
+    flex: 1;
     float: left;
     height: 175px;
     overflow-y: hidden;

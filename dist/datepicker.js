@@ -265,13 +265,6 @@
                 }
             }
 
-            /*function getDate() {
-                var year = controls.year.getValue();
-                var month = controls.month.getValue();
-                var day = controls.day.getValue();
-                return new Date(`${year}/${month}/${day}`);
-            }*/
-
             function getDateString(formatter) {
                 var year = controls.year.getValue();
                 var month = controls.month.getValue();
@@ -332,7 +325,7 @@
                 EVENTS = createEventsObject();
             this.prefix = ["-webkit-", "-moz-", "-ms-", "-o-"];
             this.elements = [];
-            this.typeName = this.constructor.name;
+            this.typeName = "iQuery";
 
             if (selector instanceof Array) {
                 that.elements = selector;
@@ -420,6 +413,14 @@
                     }
                     return that;
                 }
+            };
+
+            this.show = function () {
+                setStyle("display", "");
+            };
+
+            this.hide = function () {
+                setStyle("display", "none");
             };
 
             this.addClass = function (className) {
@@ -698,6 +699,17 @@
                     $input = $target;
                     var unitedValue = $input.val().replace(/-/g, "/"); //iOS只识别yyyy/MM/dd格式
                     var date = new Date(unitedValue);
+                    //控制是否显示月份和日期选择
+                    var format = getFormat();
+                    $year.show();
+                    $month.show();
+                    $day.show();
+                    if (!/d+/.test(format)) {
+                        $day.hide();
+                    }
+                    if (!/M+/.test(format)) {
+                        $month.hide();
+                    }
                     //设置input默认值，用于点击取消后恢复原始值
                     $input.attr("data-default-value", $input.val());
                     //如果日期不正确，则获取当前日期
@@ -741,9 +753,13 @@
                 config.opened = false;
             }
 
+            function getFormat() {
+                return $input.attr("data-format") || "yyyy-MM-dd";
+            }
+
             function setInputValue() {
-                var formatter = $input.attr("data-format") || "yyyy-MM-dd";
-                $input.val(controls.getDateString(formatter));
+                var format = getFormat();
+                $input.val(controls.getDateString(format));
             }
 
             function checkDateValid() {
@@ -773,10 +789,4 @@
     }
 
     DatePicker();
-
-    /*try {
-        DatePicker();
-    } catch (e) {
-        console.log(`DatePicker Error: ${e}`);
-    }*/
 })();
