@@ -10,8 +10,8 @@
     <meta name="x5-fullscreen" content="yes" />
     <meta name="full-screen" content="yes" />
     <title>Date Picker</title>
-    <link rel="stylesheet" href="datepicker.scss" />
-    <style>
+    <link type="text/css" rel="stylesheet" href="datepicker.css">
+<style>
         *{
             margin: 0;
             padding: 0;
@@ -44,6 +44,11 @@
             <input id="txtDate1" type="text" role="datepicker" data-format="yyyy/MM" readonly />
         </div>
     </div>
-    <script src="datepicker.es6"></script>
+    <script type="text/javascript" charset="utf-8" src="datepicker.js"></script>
+<script type="text/javascript">
+        document.body.onload = function () {
+
+        }
+    </script>
 </body>
 </html>
