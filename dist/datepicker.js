@@ -169,8 +169,10 @@
                 }
 
                 function getClientY(e) {
-                    var tc = e.touch ? e.touches[0] : e.changedTouches[0];
-                    return isMobile ? tc.clientY : e.clientY;
+                    if (isMobile) {
+                        return (e.touch ? e.touches[0] : e.changedTouches[0]).clientY;
+                    }
+                    return e.clientY;
                 }
 
                 function inertiaScrolling() {
