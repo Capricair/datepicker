@@ -4,8 +4,6 @@
 
     function DatePicker() {
 
-        initTools();
-
         var cache = [],
             config,
             $container,
@@ -13,7 +11,8 @@
             $month,
             $day,
             $input,
-            controls = {};
+            controls = {},
+            isMobile = /Android|iOS|W(eb)?OS|iPhone|iPad|iPod|BlackBerry|Windows\s?Phone/i.test(window.navigator.userAgent);
 
         var defaults = {
             year: { start: 1700, end: 3000 },
@@ -25,9 +24,9 @@
             smoothScroll: true
         };
 
-        config = $.extend({}, defaults);
-
         (function main() {
+            $.extend = _extend;
+            config = $.extend({}, defaults);
             createHTML();
             controls = createTouchControls();
             controls.setDate(new Date());
@@ -37,9 +36,6 @@
         /**************************************************
          * 以下为各函数具体实现
          **************************************************/
-        function initTools() {
-            $.extend = _extend;
-        }
 
         function createHTML() {
 
@@ -85,16 +81,19 @@
         function createTouchControls() {
 
             var itemHeight = getItemHeight();
+            var prevValue = null;
+            var touchEvents = isMobile ? ["touchstart", "touchmove", "touchend"] : ["mousedown", "mousemove", "mouseup"];
+            var isMouseDown = false;
 
             // 优化
-            $(document).on("touchstart touchmove touchend", function (e) {
+            $(document).on(touchEvents.join(" "), function (e) {
                 var $target = $(e.target);
                 if ($target.closest("#datepicker").length > 0 && config.opened){
-                    if (e.type === "touchstart"){
+                    if (e.type === touchEvents[0]){
                         $target.closest("ul").parent().trigger("datepicker.scroll.touchstart", [e]);
-                    } else if (e.type === "touchmove"){
+                    } else if (e.type === touchEvents[1] && isMouseDown){
                         $target.closest("ul").parent().trigger("datepicker.scroll.touchmove", [e]);
-                    } else if (e.type === "touchend"){
+                    } else if (e.type === touchEvents[2]){
                         $target.closest("ul").parent().trigger("datepicker.scroll.touchend", [e]);
                     }
                     // 阻止页面滚动
@@ -137,15 +136,15 @@
                     move(top);
                 };
 
-                this.setActive = function (index) {
+                this.setActive = function (index, triggerValueChanged=true) {
                     setActiveClass(index);
                     activeIndex = index;
-                    $(document).trigger("datepicker.input.change");
+                    triggerValueChanged && $container.trigger("datepicker.value.changed");
                 };
 
-                this.setCurrent = function (index) {
-                    move(getTopByIndex(index));
-                    that.setActive(index);
+                this.setCurrent = function (index, scrollDuration, triggerValueChanged=true) {
+                    transitionMove(getTopByIndex(index), scrollDuration);
+                    that.setActive(index, triggerValueChanged);
                 };
 
                 this.getActiveIndex = function () {
@@ -157,23 +156,33 @@
                 };
 
                 function touchStartHandler(e) {
-                    $list.css("transition", "", true);
+                    isMouseDown = true;
+                    var clientY = getClientY(e);
+                    $list.css("transition", "none", true);
                     config.time.start = new Date().getTime();
-                    config.touch.start = e.touches[0].clientY;
+                    config.touch.start = clientY;
                     touch.start = touch.current;
                 }
 
                 function touchMoveHandler(e) {
-                    touch.current = touch.start + e.touches[0].clientY - config.touch.start;
+                    var clientY = getClientY(e);
+                    touch.current = touch.start + clientY - config.touch.start;
                     move(touch.current);
                 }
 
                 function touchEndHandler(e) {
+                    isMouseDown = false;
+                    var clientY = getClientY(e);
                     config.time.end = new Date().getTime();
-                    config.touch.end = e.changedTouches[0].clientY;
+                    config.touch.end = clientY;
                     touch.direction = touch.end > touch.start ? "down" : "up";
                     config.smoothScroll ? inertiaScrolling() : jointing();
                     rebound();
+                }
+
+                function getClientY(e) {
+                    var tc = e.touch ? e.touches[0] : e.changedTouches[0];
+                    return isMobile ? tc.clientY : e.clientY;
                 }
 
                 function inertiaScrolling() {
@@ -236,19 +245,41 @@
 
             function setDate(date) {
 
-                var year = createSetDateData(config.year.start, date.getFullYear());
-                var month = createSetDateData(config.month.start, date.getMonth()+1);
-                var day = createSetDateData(config.day.start, date.getDate());
+                var yearData = createSetDateData(config.year.start, date.getFullYear());
+                var monthData = createSetDateData(config.month.start, date.getMonth() + 1);
+                var dayData = createSetDateData(config.day.start, date.getDate());
 
-                if (year.value > config.year.start && year.value < config.year.end){
-                    controls.year.setTop(year.top);
-                    controls.year.setActive(year.index);
-                    controls.month.setTop(month.top);
-                    controls.month.setActive(month.index);
-                    controls.day.setTop(day.top);
-                    controls.day.setActive(day.index);
+                if (yearData.value > config.year.start && yearData.value < config.year.end){
+                    if (controls.year.getValue() !== yearData.value){
+                        controls.year.setTop(yearData.top);
+                        controls.year.setActive(yearData.index);
+                    }
+                    if (controls.month.getValue() !== monthData.value){
+                        controls.month.setTop(monthData.top);
+                        controls.month.setActive(monthData.index);
+                    }
+                    if (controls.day.getValue() !== dayData.value){
+                        controls.day.setTop(dayData.top);
+                        controls.day.setActive(dayData.index);
+                    }
                 }
+
+                function createSetDateData(start, current) {
+                    var obj = {};
+                    obj.value = current;
+                    obj.top = (start - current + 2) * itemHeight;
+                    obj.index = getActiveIndex(obj.top, itemHeight);
+                    return obj;
+                }
+
             }
+
+            /*function getDate() {
+                var year = controls.year.getValue();
+                var month = controls.month.getValue();
+                var day = controls.day.getValue();
+                return new Date(`${year}/${month}/${day}`);
+            }*/
 
             function getDateString(formatter) {
                 var year = controls.year.getValue();
@@ -258,18 +289,11 @@
             }
 
             function padLeft(str, char, length) {
-                for (var i=0; i<length; i++){
-                    str = char + str;
+                var len = length - str.toString().length;
+                for (var i=0; i<len; i++){
+                    str = char.toString() + str.toString();
                 }
                 return str;
-            }
-
-            function createSetDateData(start, current) {
-                var obj = {};
-                obj.value = current;
-                obj.top = (start - current + 2) * itemHeight;
-                obj.index = getActiveIndex(obj.top, itemHeight);
-                return obj;
             }
 
             return {
@@ -277,6 +301,7 @@
                 month: new TouchControl($month),
                 day:   new TouchControl($day),
                 setDate: setDate,
+                // getDate: getDate,
                 getDateString: getDateString
             }
         }
@@ -366,8 +391,11 @@
             this.attr = function (name, value) {
                 if (typeof name === "string") {
                     if (typeof(value) === "undefined"){
-                        if (that.elements[0].getAttribute)
-                        return that.elements[0].getAttribute(name);
+                        if (that.length > 0 && that.elements[0].getAttribute){
+                            return that.elements[0].getAttribute(name);
+                        } else {
+                            return "";
+                        }
                     } else {
                         that.elements.forEach(function (el) {
                             el.setAttribute(name, value);
@@ -658,54 +686,37 @@
             return obj;
         }
 
-        function openDatePicker() {
-            $("body").addClass("datepicker-open");
-            config.opened = true;
-        }
-
-        function closeDatePicker() {
-            $("body").removeClass("datepicker-open");
-            config.opened = false;
-        }
-
-        function setInputValue() {
-            var formatter = $input.attr("data-format") || "yyyy-MM-dd";
-            $input.val(controls.getDateString(formatter));
+        function isLeapYear(year) {
+            return (year % 4 == 0) && (year % 100 != 0 || year % 400 == 0);
         }
 
         function bindActions() {
 
             var $datepickers = $("[role='datepicker']");
+            var clickEvent = isMobile ? "touchstart" : "click";
 
-            $(document).on("datepicker.input.change", function (e) {
+            $container.on("datepicker.value.changed", function (e) {
+                checkDateValid();
                 setInputValue();
             });
 
-            $(document).on("touchstart", function (e) {
-
+            $(document).on(clickEvent, function (e) {
                 var $target = $(e.target);
-
                 if ($datepickers.indexOf(e.target) > -1){
-
                     $input = $target;
-                    var value = $input.val().replace(/-/g, "/");
-                    var date = new Date(value);
-
+                    var unitedValue = $input.val().replace(/-/g, "/"); //iOS只识别yyyy/MM/dd格式
+                    var date = new Date(unitedValue);
                     //设置input默认值，用于点击取消后恢复原始值
-                    $input.attr("data-default-value", value);
-
+                    $input.attr("data-default-value", $input.val());
                     //如果日期不正确，则获取当前日期
                     if (isNaN(date.getDate())){
                         date = new Date();
                     }
-
                     //设置日期控件当前日期
                     controls.setDate(date);
-
                     //给当前input赋值
                     setInputValue();
                 }
-
                 // 点击其他地方关闭控件体验不好故取消
                 /*if (config.opened
                     && $target.parents().indexOf($container[0]) === -1
@@ -714,22 +725,52 @@
                 } else if ($target.attr("role") === "datepicker") {
                     openDatePicker();
                 }*/
-
                 if ($target.attr("role") === "datepicker") {
                     openDatePicker();
                 }
-
             });
 
-            $container.find("[data-dismiss='datepicker']").on("touchstart", function () {
+            $container.find("[data-dismiss='datepicker']").on(clickEvent, function () {
                 closeDatePicker();
             });
 
-            $container.find(".btn-cancel").on("touchstart", function () {
+            $container.find(".btn-cancel").on(clickEvent, function () {
                 $input.val($input.attr("data-default-value"));
                 closeDatePicker();
             });
 
+            function openDatePicker() {
+                $("body").addClass("datepicker-open");
+                config.opened = true;
+            }
+
+            function closeDatePicker() {
+                $("body").removeClass("datepicker-open");
+                config.opened = false;
+            }
+
+            function setInputValue() {
+                var formatter = $input.attr("data-format") || "yyyy-MM-dd";
+                $input.val(controls.getDateString(formatter));
+            }
+
+            function checkDateValid() {
+                var year = controls.year.getValue();
+                var month = controls.month.getValue();
+                var day = controls.day.getValue();
+                if (month === 2){
+                    if (isLeapYear(year)){
+                        if (day > 29) setDay(29);
+                    } else {
+                        setDay(28);
+                    }
+                } else if ([1,3,5,7,8,10,12].indexOf(month) === -1 && day > 30){
+                    setDay(30);
+                }
+                function setDay(day) {
+                    controls.day.setCurrent(day, 0.3, false);
+                }
+            }
         }
 
         window.DatePicker = {
@@ -740,10 +781,12 @@
 
     }
 
-    try {
+    DatePicker();
+
+    /*try {
         DatePicker();
     } catch (e) {
         console.log(`DatePicker Error: ${e}`);
-    }
+    }*/
 
 })();

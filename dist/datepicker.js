@@ -1,3 +1,782 @@
-"use strict";!function(){function t(){function t(){r.extend=o}function e(){function t(t,e,n){for(var r="",i=t;e>=i;i++)r+='<li data-value="'+i+'">'+i+n+"</li>";return r}var e='<div id="datepicker" class="datepicker-container">\n                                <div class="datepicker-wrapper">\n                                    <div class="datepicker-head">\n                                        <a href="javascript:;" class="btn-cancel">取消</a>\n                                        <a href="javascript:;" class="btn-confirm" data-dismiss="datepicker">确定</a>\n                                    </div>\n                                    <div class="datepicker-body">\n                                        <div class="datepicker-year">\n                                            <ul></ul>\n                                        </div>\n                                        <div class="datepicker-month">\n                                            <ul></ul>\n                                        </div>\n                                        <div class="datepicker-day">\n                                            <ul></ul>\n                                        </div>\n                                    </div>\n                                </div>\n                            </div>';r("body").append(e),d=r("#datepicker"),h=d.find(".datepicker-year"),p=d.find(".datepicker-month"),m=d.find(".datepicker-day"),h.find("ul").html(t(l.year.start,l.year.end,"年")),p.find("ul").html(t(l.month.start,l.month.end,"月")),m.find("ul").html(t(l.day.start,l.day.end,"日"))}function n(){function t(t){function n(t){g.css("transition","",!0),l.time.start=(new Date).getTime(),l.touch.start=t.touches[0].clientY,k.start=k.current}function o(t){k.current=k.start+t.touches[0].clientY-l.touch.start,h(k.current)}function c(t){l.time.end=(new Date).getTime(),l.touch.end=t.changedTouches[0].clientY,k.direction=k.end>k.start?"down":"up",l.smoothScroll?s():u(),d()}function s(){var t=l.time.end-l.time.start,n=l.touch.end-l.touch.start,r=e(n,t),i=k.current+n*r*1.5,a=r;p(i,a,"cubic-bezier(.14,.41,.39,.69)")}function u(){var t=parseFloat((k.current/f).toFixed(1));k.current=Math.round(t)*f,p(k.current)}function d(){k.current>b.top?(k.current=b.top,p(k.current)):k.current<b.bottom&&(k.current=b.bottom,p(k.current))}function h(t){k.current=t,g.css("transform","translate3d(0, "+t+"px, 0)",!0)}function p(t){var e=arguments.length<=1||void 0===arguments[1]?.3:arguments[1],n=arguments.length<=2||void 0===arguments[2]?"ease":arguments[2];k.current=t,g.css("transition","transform "+e+"s "+n,!0).css("transform","translate3d(0, "+t+"px, 0)",!0)}function m(t){var e=arguments.length<=1||void 0===arguments[1]?"active":arguments[1];g.find("li.active").removeClass(e),g.find("li:nth-child("+t+")").addClass(e)}var v=this,g=t.find("ul"),y=t.height(),E=g.height(),k={start:0,end:0,current:0,direction:"up"},b={top:2*f,bottom:y-E-2*f},D=0;t.on("datepicker.scroll.touchstart",n),t.on("datepicker.scroll.touchmove",o),t.on("datepicker.scroll.touchend",c),g.once("webkitTransitionEnd transitionend",function(){g.trigger("datepicker.scroll.stop")},!1,500),g.on("datepicker.scroll.stop",function(){u(),v.setActive(a(k.current,f))}),this.setTop=function(t){h(t)},this.setActive=function(t){m(t),D=t,r(document).trigger("datepicker.input.change")},this.setCurrent=function(t){h(i(t)),v.setActive(t)},this.getActiveIndex=function(){return D},this.getValue=function(){return parseInt(g.find("li.active").attr("data-value"))}}function e(t,e){return parseFloat(Math.abs(t/e).toFixed(2))}function n(){return h.find("ul > li:first-child").height()}function i(t){return(3-t)*f}function a(t,e){return parseInt(3-t/e)}function o(t){var e=u(l.year.start,t.getFullYear()),n=u(l.month.start,t.getMonth()+1),r=u(l.day.start,t.getDate());e.value>l.year.start&&e.value<l.year.end&&(y.year.setTop(e.top),y.year.setActive(e.index),y.month.setTop(n.top),y.month.setActive(n.index),y.day.setTop(r.top),y.day.setActive(r.index))}function c(t){var e=y.year.getValue(),n=y.month.getValue(),r=y.day.getValue();return t.replace(/y+/,e).replace(/M+/,s(n,0,2)).replace(/d+/,s(r,0,2))}function s(t,e,n){for(var r=0;n>r;r++)t=e+t;return t}function u(t,e){var n={};return n.value=e,n.top=(t-e+2)*f,n.index=a(n.top,f),n}var f=n();return r(document).on("touchstart touchmove touchend",function(t){var e=r(t.target);e.closest("#datepicker").length>0&&l.opened&&("touchstart"===t.type?e.closest("ul").parent().trigger("datepicker.scroll.touchstart",[t]):"touchmove"===t.type?e.closest("ul").parent().trigger("datepicker.scroll.touchmove",[t]):"touchend"===t.type&&e.closest("ul").parent().trigger("datepicker.scroll.touchend",[t]),t.preventDefault())}),{year:new t(h),month:new t(p),day:new t(m),setDate:o,getDateString:c}}function r(t){if("string"==typeof t&&g[t])return g[t];if(t instanceof HTMLElement||t instanceof HTMLDocument){for(var e=0;e<g.length;e++)if(g[e].elements[0]===t)return g[e]}else if(t instanceof Array)for(var n=0;n<g.length;n++)for(var r=g[n],a=0;a<r.elements.length&&(r.elements.length===t.length&&r.elements[a]==t[a]);a++)if(a===t.length-1)return g[n];var o=new i(t);return g.push(o),o}function i(t){function e(t,e,r){s.elements.forEach(function(i){r&&n(i,t,e),i.style[t]=e})}function n(t,e,n){s.prefix.forEach(function(r){t.style[r+e]=n})}function i(){return s.elements[0]?s.elements[0].getBoundingClientRect():{}}function o(){var t=[];return t.find=function(t,e){for(var n=0;n<this.length;n++){var r=u[n];if(r.target===t&&r.event===e)return r}},t}function c(t){var e=document.createElement("div");return e.innerHTML=t,e.children[0]}if(t){var s=this,u=o();this.prefix=["-webkit-","-moz-","-ms-","-o-"],this.elements=[],this.typeName=this.constructor.name,t instanceof Array?s.elements=t:t instanceof NodeList?s.elements=a(t):t instanceof HTMLElement||t instanceof HTMLDocument?s.elements=[t]:"iQuery"===t.typeName?s.elements=t.elements:"string"==typeof t?(s.selector=t,s.elements=a(document.querySelectorAll(t))):(console.log("iQuery Notice: selector invalid.\n"),console.log("selector: "+t)),Object.defineProperty(s,"length",{get:function(){return s.elements.length}}),s.elements.forEach(function(t,e){s[e]=t}),["top","left","right","bottom","width","height"].forEach(function(t){s[t]=function(e){return"undefined"==typeof e?i()[t]:(s.css(t,/\d+[^\d]/.test(e)?e:e+"px"),s)}}),this.val=function(t){return"undefined"==typeof t?s[0].value:(s[0].value=t,s)},this.attr=function(t,e){if("string"==typeof t){if("undefined"!=typeof e)return s.elements.forEach(function(n){n.setAttribute(t,e)}),s;if(s.elements[0].getAttribute)return s.elements[0].getAttribute(t)}else if("object"==typeof t){for(var n in t)!function(t){s.elements.forEach(function(n){n.setAttribute(t,e)})}(n);return s}},this.css=function(t,n,r){if("string"==typeof t)return"undefined"==typeof n?s.elements[0].style[t]:(e(t,n,r),s);if("object"==typeof t){for(var i in t)e(i,t[i],r);return s}},this.addClass=function(t){return s.elements.forEach(function(e){e.classList.add(t)}),s},this.removeClass=function(t){return s.elements.forEach(function(e){e.classList.remove(t)}),s},this.hasClass=function(t){return s.elements[0].classList.contains(t)},this.toggleClass=function(t){return s.hasClass(t)?s.removeClass(t):s.addClass(t),this},this.html=function(t){return"undefined"==typeof t?s.elements[0].innerHTML:(s.elements.forEach(function(e){e.innerHTML=t}),s)},this.append=function(t){return s.elements.forEach(function(e){t instanceof HTMLElement?e.appendChild(t):"iQuery"===t.typeName?t.elements.forEach(function(t){e.appendChild(t)}):"string"==typeof t&&e.appendChild(c(t))}),s},this.find=function(t){var e=[];return s.elements.forEach(function(n){r(n.querySelectorAll(t)).each(function(t){e.push(t)})}),r(e)},this.parent=function(){var t=[];return s.elements.forEach(function(e){e.parentElement&&t.push(e.parentElement)}),r(t)},this.parents=function(){var t=[];return s.elements.forEach(function(e){for(;e.parentElement;)t.push(e.parentElement),e=e.parentElement}),t},this.closest=function(t){var e=[],n=!1;return s.elements.forEach(function(i){for(var a=r(document).find(t);i.parentElement;){for(var o=0;o<a.length;o++)if(a[o]===i.parentElement){e.push(a[o]),n=!0;break}if(n)break;i=i.parentElement}}),r(e)},this.each=function(t){s.elements.forEach(t)},this.reverse=function(){return s.elements.reverse(),s},this.indexOf=function(t){for(var e=0;e<s.length;e++)if(s[e]===t)return e;return-1},this.on=function(t,e,n,r){var i=!0;return"function"==typeof e&&(i=!1,n=e),s.elements.forEach(function(a){var o=i===!1?n:function(t){for(var r=a.querySelectorAll(e),i=0;i<r.length;i++){var o=r[i];if(o===t.target){n.call(o,t);break}}};u.push({target:a,event:t,selector:e,handle:o}),t.split(" ").forEach(function(t){a.addEventListener(t,o,r)})}),this},this.off=function(t,e,n){return s.elements.forEach(function(r){if(!e){var i=u.find(r,t);i&&(e=i.handle)}t.split(" ").forEach(function(t){r.removeEventListener(t,e,n)})}),this},this.one=function(t,e,n){return s.on(t,function(n){s.off(t),e.call(this,n)},n),this},this.once=function(t,e,n,r){var i=0,a=new Date;s.on(t,function(t){var n=new Date;if(0===i&&n-a>r){i++,a=n;try{e.call(this,t)}finally{i=0}}},n)},this.trigger=function(t,e){return s.elements.forEach(function(n){var r=u.find(n,t);r&&r.handle.apply(n,e)}),s}}}function a(t){for(var e=[],n=0;n<t.length;n++)e.push(t[n]);return e}function o(t){for(var e=1;e<arguments.length;e++){var n=arguments[e];for(var r in n)"undefined"!=typeof n[r]&&(t[r]=n[r])}return t}function c(){r("body").addClass("datepicker-open"),l.opened=!0}function s(){r("body").removeClass("datepicker-open"),l.opened=!1}function u(){var t=v.attr("data-format")||"yyyy-MM-dd";v.val(y.getDateString(t))}function f(){var t=r("[role='datepicker']");r(document).on("datepicker.input.change",function(){u()}),r(document).on("touchstart",function(e){var n=r(e.target);if(t.indexOf(e.target)>-1){v=n;var i=v.val().replace(/-/g,"/"),a=new Date(i);v.attr("data-default-value",i),isNaN(a.getDate())&&(a=new Date),y.setDate(a),u()}"datepicker"===n.attr("role")&&c()}),d.find("[data-dismiss='datepicker']").on("touchstart",function(){s()}),d.find(".btn-cancel").on("touchstart",function(){v.val(v.attr("data-default-value")),s()})}t();var l,d,h,p,m,v,g=[],y={},E={year:{start:1700,end:3e3},month:{start:1,end:12},day:{start:1,end:31},time:{start:0,end:0},touch:{start:0,end:0},opened:!1,smoothScroll:!0};l=r.extend({},E),function(){e(),y=n(),y.setDate(new Date),f()}(),window.DatePicker={setOptions:function(t){r.extend(l,t)}}}try{t()}catch(e){console.log("DatePicker Error: "+e)}}();
-//# sourceMappingURL=datepicker.org.js
-//# sourceMappingURL=/Content/LMS/plugins/datepicker/datepicker.map
+"use strict";
+
+(function () {
+
+    'use strict';
+
+    function DatePicker() {
+
+        var cache = [],
+            config,
+            $container,
+            $year,
+            $month,
+            $day,
+            $input,
+            controls = {},
+            isMobile = /Android|iOS|W(eb)?OS|iPhone|iPad|iPod|BlackBerry|Windows\s?Phone/i.test(window.navigator.userAgent);
+
+        var defaults = {
+            year: { start: 1700, end: 3000 },
+            month: { start: 1, end: 12 },
+            day: { start: 1, end: 31 },
+            time: { start: 0, end: 0 },
+            touch: { start: 0, end: 0 },
+            opened: false,
+            smoothScroll: true
+        };
+
+        (function main() {
+            $.extend = _extend;
+            config = $.extend({}, defaults);
+            createHTML();
+            controls = createTouchControls();
+            controls.setDate(new Date());
+            bindActions();
+        })();
+
+        /**************************************************
+         * 以下为各函数具体实现
+         **************************************************/
+
+        function createHTML() {
+
+            var baseHTML = "<div id=\"datepicker\" class=\"datepicker-container\">\n                                <div class=\"datepicker-wrapper\">\n                                    <div class=\"datepicker-head\">\n                                        <a href=\"javascript:;\" class=\"btn-cancel\">取消</a>\n                                        <a href=\"javascript:;\" class=\"btn-confirm\" data-dismiss=\"datepicker\">确定</a>\n                                    </div>\n                                    <div class=\"datepicker-body\">\n                                        <div class=\"datepicker-year\">\n                                            <ul></ul>\n                                        </div>\n                                        <div class=\"datepicker-month\">\n                                            <ul></ul>\n                                        </div>\n                                        <div class=\"datepicker-day\">\n                                            <ul></ul>\n                                        </div>\n                                    </div>\n                                </div>\n                            </div>";
+            $("body").append(baseHTML);
+
+            $container = $("#datepicker");
+            $year = $container.find(".datepicker-year");
+            $month = $container.find(".datepicker-month");
+            $day = $container.find(".datepicker-day");
+
+            $year.find("ul").html(createList(config.year.start, config.year.end, "年"));
+            $month.find("ul").html(createList(config.month.start, config.month.end, "月"));
+            $day.find("ul").html(createList(config.day.start, config.day.end, "日"));
+
+            function createList(min, max, unit) {
+                var html = "";
+                for (var i = min; i <= max; i++) {
+                    html += "<li data-value=\"" + i + "\">" + i + unit + "</li>";
+                }
+                return html;
+            }
+        }
+
+        function createTouchControls() {
+
+            var itemHeight = getItemHeight();
+            var prevValue = null;
+            var touchEvents = isMobile ? ["touchstart", "touchmove", "touchend"] : ["mousedown", "mousemove", "mouseup"];
+            var isMouseDown = false;
+
+            // 优化
+            $(document).on(touchEvents.join(" "), function (e) {
+                var $target = $(e.target);
+                if ($target.closest("#datepicker").length > 0 && config.opened) {
+                    if (e.type === touchEvents[0]) {
+                        $target.closest("ul").parent().trigger("datepicker.scroll.touchstart", [e]);
+                    } else if (e.type === touchEvents[1] && isMouseDown) {
+                        $target.closest("ul").parent().trigger("datepicker.scroll.touchmove", [e]);
+                    } else if (e.type === touchEvents[2]) {
+                        $target.closest("ul").parent().trigger("datepicker.scroll.touchend", [e]);
+                    }
+                    // 阻止页面滚动
+                    e.preventDefault();
+                }
+            });
+
+            function TouchControl($ctrl) {
+
+                var that = this;
+                var $list = $ctrl.find("ul");
+                var scrollViewHeight = $ctrl.height();
+                var listHeight = $list.height();
+                var touch = {
+                    start: 0,
+                    end: 0,
+                    current: 0,
+                    direction: "up"
+                };
+                var limit = {
+                    top: itemHeight * 2,
+                    bottom: scrollViewHeight - listHeight - itemHeight * 2
+                };
+                var activeIndex = 0;
+
+                $ctrl.on("datepicker.scroll.touchstart", touchStartHandler);
+                $ctrl.on("datepicker.scroll.touchmove", touchMoveHandler);
+                $ctrl.on("datepicker.scroll.touchend", touchEndHandler);
+
+                $list.once("webkitTransitionEnd transitionend", function () {
+                    $list.trigger("datepicker.scroll.stop");
+                }, false, 500);
+
+                $list.on("datepicker.scroll.stop", function () {
+                    jointing();
+                    that.setActive(getActiveIndex(touch.current, itemHeight));
+                });
+
+                this.setTop = function (top) {
+                    move(top);
+                };
+
+                this.setActive = function (index) {
+                    var triggerValueChanged = arguments.length <= 1 || arguments[1] === undefined ? true : arguments[1];
+
+                    setActiveClass(index);
+                    activeIndex = index;
+                    triggerValueChanged && $container.trigger("datepicker.value.changed");
+                };
+
+                this.setCurrent = function (index, scrollDuration) {
+                    var triggerValueChanged = arguments.length <= 2 || arguments[2] === undefined ? true : arguments[2];
+
+                    transitionMove(getTopByIndex(index), scrollDuration);
+                    that.setActive(index, triggerValueChanged);
+                };
+
+                this.getActiveIndex = function () {
+                    return activeIndex;
+                };
+
+                this.getValue = function () {
+                    return parseInt($list.find("li.active").attr("data-value"));
+                };
+
+                function touchStartHandler(e) {
+                    isMouseDown = true;
+                    var clientY = getClientY(e);
+                    $list.css("transition", "none", true);
+                    config.time.start = new Date().getTime();
+                    config.touch.start = clientY;
+                    touch.start = touch.current;
+                }
+
+                function touchMoveHandler(e) {
+                    var clientY = getClientY(e);
+                    touch.current = touch.start + clientY - config.touch.start;
+                    move(touch.current);
+                }
+
+                function touchEndHandler(e) {
+                    isMouseDown = false;
+                    var clientY = getClientY(e);
+                    config.time.end = new Date().getTime();
+                    config.touch.end = clientY;
+                    touch.direction = touch.end > touch.start ? "down" : "up";
+                    config.smoothScroll ? inertiaScrolling() : jointing();
+                    rebound();
+                }
+
+                function getClientY(e) {
+                    var tc = e.touch ? e.touches[0] : e.changedTouches[0];
+                    return isMobile ? tc.clientY : e.clientY;
+                }
+
+                function inertiaScrolling() {
+                    var t = config.time.end - config.time.start;
+                    var s = config.touch.end - config.touch.start;
+                    var v = velocity(s, t);
+                    var top = touch.current + s * v * 1.5;
+                    var time = v;
+                    transitionMove(top, time, "cubic-bezier(.14,.41,.39,.69)");
+                }
+
+                function jointing() {
+                    var index = parseFloat((touch.current / itemHeight).toFixed(1));
+                    touch.current = Math.round(index) * itemHeight;
+                    transitionMove(touch.current);
+                }
+
+                function rebound() {
+                    if (touch.current > limit.top) {
+                        touch.current = limit.top;
+                        transitionMove(touch.current);
+                    } else if (touch.current < limit.bottom) {
+                        touch.current = limit.bottom;
+                        transitionMove(touch.current);
+                    }
+                }
+
+                function move(top) {
+                    touch.current = top;
+                    $list.css("transform", "translate3d(0, " + top + "px, 0)", true);
+                }
+
+                function transitionMove(top) {
+                    var time = arguments.length <= 1 || arguments[1] === undefined ? 0.3 : arguments[1];
+                    var ease = arguments.length <= 2 || arguments[2] === undefined ? "ease" : arguments[2];
+
+                    touch.current = top;
+                    $list.css("transition", "transform " + time + "s " + ease, true).css("transform", "translate3d(0, " + top + "px, 0)", true);
+                }
+
+                function setActiveClass(index) {
+                    var activeClass = arguments.length <= 1 || arguments[1] === undefined ? "active" : arguments[1];
+
+                    $list.find("li.active").removeClass(activeClass);
+                    $list.find("li:nth-child(" + index + ")").addClass(activeClass);
+                }
+            }
+
+            function velocity(s, t) {
+                return parseFloat(Math.abs(s / t).toFixed(2));
+            }
+
+            function getItemHeight() {
+                return $year.find("ul > li:first-child").height();
+            }
+
+            function getTopByIndex(index) {
+                return (3 - index) * itemHeight;
+            }
+
+            function getActiveIndex(top, itemHeight) {
+                return parseInt(3 - top / itemHeight);
+            }
+
+            function setDate(date) {
+
+                var yearData = createSetDateData(config.year.start, date.getFullYear());
+                var monthData = createSetDateData(config.month.start, date.getMonth() + 1);
+                var dayData = createSetDateData(config.day.start, date.getDate());
+
+                if (yearData.value > config.year.start && yearData.value < config.year.end) {
+                    if (controls.year.getValue() !== yearData.value) {
+                        controls.year.setTop(yearData.top);
+                        controls.year.setActive(yearData.index);
+                    }
+                    if (controls.month.getValue() !== monthData.value) {
+                        controls.month.setTop(monthData.top);
+                        controls.month.setActive(monthData.index);
+                    }
+                    if (controls.day.getValue() !== dayData.value) {
+                        controls.day.setTop(dayData.top);
+                        controls.day.setActive(dayData.index);
+                    }
+                }
+
+                function createSetDateData(start, current) {
+                    var obj = {};
+                    obj.value = current;
+                    obj.top = (start - current + 2) * itemHeight;
+                    obj.index = getActiveIndex(obj.top, itemHeight);
+                    return obj;
+                }
+            }
+
+            /*function getDate() {
+                var year = controls.year.getValue();
+                var month = controls.month.getValue();
+                var day = controls.day.getValue();
+                return new Date(`${year}/${month}/${day}`);
+            }*/
+
+            function getDateString(formatter) {
+                var year = controls.year.getValue();
+                var month = controls.month.getValue();
+                var day = controls.day.getValue();
+                return formatter.replace(/y+/, year).replace(/M+/, padLeft(month, 0, 2)).replace(/d+/, padLeft(day, 0, 2));
+            }
+
+            function padLeft(str, char, length) {
+                var len = length - str.toString().length;
+                for (var i = 0; i < len; i++) {
+                    str = char.toString() + str.toString();
+                }
+                return str;
+            }
+
+            return {
+                year: new TouchControl($year),
+                month: new TouchControl($month),
+                day: new TouchControl($day),
+                setDate: setDate,
+                // getDate: getDate,
+                getDateString: getDateString
+            };
+        }
+
+        function $(selector) {
+            if (typeof selector === "string" && cache[selector]) {
+                return cache[selector];
+            } else if (selector instanceof HTMLElement || selector instanceof HTMLDocument) {
+                for (var _i = 0; _i < cache.length; _i++) {
+                    if (cache[_i].elements[0] === selector) {
+                        return cache[_i];
+                    }
+                }
+            } else if (selector instanceof Array) {
+                for (var i = 0; i < cache.length; i++) {
+                    var item = cache[i];
+                    for (var j = 0; j < item.elements.length; j++) {
+                        if (item.elements.length !== selector.length || item.elements[j] != selector[j]) {
+                            break;
+                        }
+                        if (j === selector.length - 1) {
+                            return cache[i];
+                        }
+                    }
+                }
+            }
+            var obj = new iQuery(selector);
+            cache.push(obj);
+            return obj;
+        }
+
+        function iQuery(selector) {
+
+            if (!selector) return;
+
+            var that = this,
+                EVENTS = createEventsObject();
+            this.prefix = ["-webkit-", "-moz-", "-ms-", "-o-"];
+            this.elements = [];
+            this.typeName = this.constructor.name;
+
+            if (selector instanceof Array) {
+                that.elements = selector;
+            } else if (selector instanceof NodeList) {
+                that.elements = nodeListToArray(selector);
+            } else if (selector instanceof HTMLElement || selector instanceof HTMLDocument) {
+                that.elements = [selector];
+            } else if (selector.typeName === "iQuery") {
+                that.elements = selector.elements;
+            } else if (typeof selector === "string") {
+                that.selector = selector;
+                that.elements = nodeListToArray(document.querySelectorAll(selector));
+            } else {
+                console.log("iQuery Notice: selector invalid.\n");
+                console.log("selector: " + selector);
+            }
+
+            Object.defineProperty(that, "length", {
+                get: function get() {
+                    return that.elements.length;
+                }
+            });
+
+            that.elements.forEach(function (el, i) {
+                that[i] = el;
+            });
+
+            ["top", "left", "right", "bottom", "width", "height"].forEach(function (attr) {
+                that[attr] = function (value) {
+                    if (typeof value === "undefined") {
+                        return getBoundingClientRect()[attr];
+                    } else {
+                        that.css(attr, /\d+[^\d]/.test(value) ? value : value + "px");
+                        return that;
+                    }
+                };
+            });
+
+            this.val = function (value) {
+                if (typeof value === "undefined") {
+                    return that[0].value;
+                } else {
+                    that[0].value = value;
+                    return that;
+                }
+            };
+
+            this.attr = function (name, value) {
+                if (typeof name === "string") {
+                    if (typeof value === "undefined") {
+                        if (that.length > 0 && that.elements[0].getAttribute) {
+                            return that.elements[0].getAttribute(name);
+                        } else {
+                            return "";
+                        }
+                    } else {
+                        that.elements.forEach(function (el) {
+                            el.setAttribute(name, value);
+                        });
+                        return that;
+                    }
+                } else if (typeof name === "object") {
+                    for (var key in name) {
+                        (function (k) {
+                            that.elements.forEach(function (el) {
+                                el.setAttribute(k, value);
+                            });
+                        })(key);
+                    }
+                    return that;
+                }
+            };
+
+            this.css = function (name, value, hasPrefix) {
+                if (typeof name === "string") {
+                    if (typeof value === "undefined") {
+                        return that.elements[0].style[name];
+                    } else {
+                        setStyle(name, value, hasPrefix);
+                        return that;
+                    }
+                } else if (typeof name === "object") {
+                    for (var key in name) {
+                        setStyle(key, name[key], hasPrefix);
+                    }
+                    return that;
+                }
+            };
+
+            this.addClass = function (className) {
+                that.elements.forEach(function (el) {
+                    el.classList.add(className);
+                });
+                return that;
+            };
+
+            this.removeClass = function (className) {
+                that.elements.forEach(function (el) {
+                    el.classList.remove(className);
+                });
+                return that;
+            };
+
+            this.hasClass = function (className) {
+                return that.elements[0].classList.contains(className);
+            };
+
+            this.toggleClass = function (className) {
+                that.hasClass(className) ? that.removeClass(className) : that.addClass(className);
+                return this;
+            };
+
+            this.html = function (str) {
+                if (typeof str === "undefined") {
+                    return that.elements[0].innerHTML;
+                } else {
+                    that.elements.forEach(function (el) {
+                        el.innerHTML = str;
+                    });
+                }
+                return that;
+            };
+
+            this.append = function (html) {
+                that.elements.forEach(function (el) {
+                    if (html instanceof HTMLElement) {
+                        el.appendChild(html);
+                    } else if (html.typeName === "iQuery") {
+                        html.elements.forEach(function (child) {
+                            el.appendChild(child);
+                        });
+                    } else if (typeof html === "string") {
+                        el.appendChild(parseHTML(html));
+                    }
+                });
+                return that;
+            };
+
+            this.find = function (selector) {
+                var list = [];
+                that.elements.forEach(function (el) {
+                    $(el.querySelectorAll(selector)).each(function (child) {
+                        list.push(child);
+                    });
+                });
+                return $(list);
+            };
+
+            this.parent = function () {
+                var parents = [];
+                that.elements.forEach(function (el) {
+                    if (el.parentElement) {
+                        parents.push(el.parentElement);
+                    }
+                });
+                return $(parents);
+            };
+
+            this.parents = function () {
+                var parents = [];
+                that.elements.forEach(function (el) {
+                    while (el.parentElement) {
+                        parents.push(el.parentElement);
+                        el = el.parentElement;
+                    }
+                });
+                return parents;
+            };
+
+            this.closest = function (selector) {
+                var parents = [],
+                    matched = false;
+                that.elements.forEach(function (el) {
+                    var els = $(document).find(selector);
+                    while (el.parentElement) {
+                        for (var i = 0; i < els.length; i++) {
+                            if (els[i] === el.parentElement) {
+                                parents.push(els[i]);
+                                matched = true;
+                                break;
+                            }
+                        }
+                        if (matched) break;
+                        el = el.parentElement;
+                    }
+                });
+                return $(parents);
+            };
+
+            this.each = function (callback) {
+                that.elements.forEach(callback);
+            };
+
+            this.reverse = function () {
+                that.elements.reverse();
+                return that;
+            };
+
+            this.indexOf = function (element) {
+                for (var i = 0; i < that.length; i++) {
+                    if (that[i] === element) {
+                        return i;
+                    }
+                }
+                return -1;
+            };
+
+            this.on = function (eventName, selector, handle, useCapture) {
+                var IsDelegate = true;
+                if (typeof selector === "function") {
+                    IsDelegate = false;
+                    handle = selector;
+                }
+                that.elements.forEach(function (el) {
+                    var delegate = IsDelegate === false ? handle : function (e) {
+                        var children = el.querySelectorAll(selector);
+                        for (var i = 0; i < children.length; i++) {
+                            var child = children[i];
+                            if (child === e.target) {
+                                handle.call(child, e);
+                                break;
+                            }
+                        }
+                    };
+                    EVENTS.push({
+                        target: el,
+                        event: eventName,
+                        selector: selector,
+                        handle: delegate
+                    });
+                    eventName.split(" ").forEach(function (name) {
+                        el.addEventListener(name, delegate, useCapture);
+                    });
+                });
+                return this;
+            };
+
+            this.off = function (eventName, handle, useCapture) {
+                that.elements.forEach(function (el) {
+                    if (!handle) {
+                        var evt = EVENTS.find(el, eventName);
+                        if (evt) handle = evt.handle;
+                    }
+                    eventName.split(" ").forEach(function (name) {
+                        el.removeEventListener(name, handle, useCapture);
+                    });
+                });
+                return this;
+            };
+
+            this.one = function (eventName, handle, useCapture) {
+                that.on(eventName, function (e) {
+                    that.off(eventName);
+                    handle.call(this, e);
+                }, useCapture);
+                return this;
+            };
+
+            this.once = function (eventName, handle, useCapture, timespan) {
+                var locker = 0;
+                var date1 = new Date();
+                that.on(eventName, function (e) {
+                    var date2 = new Date();
+                    if (locker === 0 && date2 - date1 > timespan) {
+                        locker++;
+                        date1 = date2;
+                        try {
+                            handle.call(this, e);
+                        } finally {
+                            locker = 0;
+                        }
+                    }
+                }, useCapture);
+            };
+
+            this.trigger = function (eventName, args) {
+                that.elements.forEach(function (el) {
+                    var evt = EVENTS.find(el, eventName);
+                    if (evt) {
+                        evt.handle.apply(el, args);
+                    }
+                });
+                return that;
+            };
+
+            function setStyle(name, value, hasPrefix) {
+                that.elements.forEach(function (el) {
+                    hasPrefix && setPrefixStyle(el, name, value);
+                    el.style[name] = value;
+                });
+            }
+
+            function setPrefixStyle(el, name, value) {
+                that.prefix.forEach(function (pre) {
+                    el.style[pre + name] = value;
+                });
+            }
+
+            function getBoundingClientRect() {
+                if (that.elements[0]) {
+                    return that.elements[0].getBoundingClientRect();
+                }
+                return {};
+            }
+
+            function createEventsObject() {
+                var events = [];
+                events.find = function (target, eventName) {
+                    for (var i = 0; i < this.length; i++) {
+                        var evt = EVENTS[i];
+                        if (evt.target === target && evt.event === eventName) {
+                            return evt;
+                        }
+                    }
+                };
+                return events;
+            }
+
+            function parseHTML(str) {
+                var wrap = document.createElement("div");
+                wrap.innerHTML = str;
+                return wrap.children[0];
+            }
+        }
+
+        function nodeListToArray(nodeList) {
+            var arr = [];
+            for (var i = 0; i < nodeList.length; i++) {
+                arr.push(nodeList[i]);
+            }
+            return arr;
+        }
+
+        function _extend(obj) {
+            for (var i = 1; i < arguments.length; i++) {
+                var ext = arguments[i];
+                for (var key in ext) {
+                    if (typeof ext[key] !== "undefined") {
+                        obj[key] = ext[key];
+                    }
+                }
+            }
+            return obj;
+        }
+
+        function isLeapYear(year) {
+            return year % 4 == 0 && (year % 100 != 0 || year % 400 == 0);
+        }
+
+        function bindActions() {
+
+            var $datepickers = $("[role='datepicker']");
+            var clickEvent = isMobile ? "touchstart" : "click";
+
+            $container.on("datepicker.value.changed", function (e) {
+                checkDateValid();
+                setInputValue();
+            });
+
+            $(document).on(clickEvent, function (e) {
+                var $target = $(e.target);
+                if ($datepickers.indexOf(e.target) > -1) {
+                    $input = $target;
+                    var unitedValue = $input.val().replace(/-/g, "/"); //iOS只识别yyyy/MM/dd格式
+                    var date = new Date(unitedValue);
+                    //设置input默认值，用于点击取消后恢复原始值
+                    $input.attr("data-default-value", $input.val());
+                    //如果日期不正确，则获取当前日期
+                    if (isNaN(date.getDate())) {
+                        date = new Date();
+                    }
+                    //设置日期控件当前日期
+                    controls.setDate(date);
+                    //给当前input赋值
+                    setInputValue();
+                }
+                // 点击其他地方关闭控件体验不好故取消
+                /*if (config.opened
+                    && $target.parents().indexOf($container[0]) === -1
+                    && $target.attr("role") !== "datepicker"){
+                    closeDatePicker();
+                } else if ($target.attr("role") === "datepicker") {
+                    openDatePicker();
+                }*/
+                if ($target.attr("role") === "datepicker") {
+                    openDatePicker();
+                }
+            });
+
+            $container.find("[data-dismiss='datepicker']").on(clickEvent, function () {
+                closeDatePicker();
+            });
+
+            $container.find(".btn-cancel").on(clickEvent, function () {
+                $input.val($input.attr("data-default-value"));
+                closeDatePicker();
+            });
+
+            function openDatePicker() {
+                $("body").addClass("datepicker-open");
+                config.opened = true;
+            }
+
+            function closeDatePicker() {
+                $("body").removeClass("datepicker-open");
+                config.opened = false;
+            }
+
+            function setInputValue() {
+                var formatter = $input.attr("data-format") || "yyyy-MM-dd";
+                $input.val(controls.getDateString(formatter));
+            }
+
+            function checkDateValid() {
+                var year = controls.year.getValue();
+                var month = controls.month.getValue();
+                var day = controls.day.getValue();
+                if (month === 2) {
+                    if (isLeapYear(year)) {
+                        if (day > 29) setDay(29);
+                    } else {
+                        setDay(28);
+                    }
+                } else if ([1, 3, 5, 7, 8, 10, 12].indexOf(month) === -1 && day > 30) {
+                    setDay(30);
+                }
+                function setDay(day) {
+                    controls.day.setCurrent(day, 0.3, false);
+                }
+            }
+        }
+
+        window.DatePicker = {
+            setOptions: function setOptions(options) {
+                $.extend(config, options);
+            }
+        };
+    }
+
+    DatePicker();
+
+    /*try {
+        DatePicker();
+    } catch (e) {
+        console.log(`DatePicker Error: ${e}`);
+    }*/
+})();
