@@ -5,7 +5,8 @@ fis.config.merge({
 			"**.suo", 
 			"**.config", 
 			"**.cmd", 
-			"**.rar", 
+			"**.rar",
+			/readme\.md/i,
 			/\/\.idea\//i, 
 			/\/\.git\//i
 		],
