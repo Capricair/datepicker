@@ -18,10 +18,13 @@
             year: { start: 1700, end: 3000 },
             month: { start: 1, end: 12 },
             day: { start: 1, end: 31 },
-            time: { start: 0, end: 0 },
-            touch: { start: 0, end: 0 },
             opened: false,
             smoothScroll: true
+        };
+
+        var global = {
+            time: { start: 0, end: 0 },
+            touch: { start: 0, end: 0 }
         };
 
         (function main() {
@@ -42,7 +45,7 @@
             var baseHTML = `<div id="datepicker" class="datepicker-container">
                                 <div class="datepicker-wrapper">
                                     <div class="datepicker-head">
-                                        <a href="javascript:;" class="btn-cancel">取消</a>
+                                        <a href="javascript:;" class="btn-cancel">取消111</a>
                                         <a href="javascript:;" class="btn-confirm" data-dismiss="datepicker">确定</a>
                                     </div>
                                     <div class="datepicker-body">
@@ -81,7 +84,6 @@
         function createTouchControls() {
 
             var itemHeight = getItemHeight();
-            var prevValue = null;
             var touchEvents = isMobile ? ["touchstart", "touchmove", "touchend"] : ["mousedown", "mousemove", "mouseup"];
             var isMouseDown = false;
 
@@ -159,22 +161,22 @@
                     isMouseDown = true;
                     var clientY = getClientY(e);
                     $list.css("transition", "none", true);
-                    config.time.start = new Date().getTime();
-                    config.touch.start = clientY;
+                    global.time.start = new Date().getTime();
+                    global.touch.start = clientY;
                     touch.start = touch.current;
                 }
 
                 function touchMoveHandler(e) {
                     var clientY = getClientY(e);
-                    touch.current = touch.start + clientY - config.touch.start;
+                    touch.current = touch.start + clientY - global.touch.start;
                     move(touch.current);
                 }
 
                 function touchEndHandler(e) {
                     isMouseDown = false;
                     var clientY = getClientY(e);
-                    config.time.end = new Date().getTime();
-                    config.touch.end = clientY;
+                    global.time.end = new Date().getTime();
+                    global.touch.end = clientY;
                     touch.direction = touch.end > touch.start ? "down" : "up";
                     config.smoothScroll ? inertiaScrolling() : jointing();
                     rebound();
@@ -188,8 +190,8 @@
                 }
 
                 function inertiaScrolling() {
-                    var t = config.time.end - config.time.start;
-                    var s = config.touch.end - config.touch.start;
+                    var t = global.time.end - global.time.start;
+                    var s = global.touch.end - global.touch.start;
                     var v = velocity(s, t);
                     var top = touch.current + s * v * 1.5;
                     var time = v;
@@ -349,8 +351,7 @@
                 that.selector = selector;
                 that.elements = nodeListToArray(document.querySelectorAll(selector));
             } else {
-                console.log(`iQuery Notice: selector invalid.\n`);
-                console.log(`selector: ${selector}`)
+                console.log(`iQuery Notice: selector invalid.`);
             }
 
             Object.defineProperty(that, "length", {
@@ -796,7 +797,6 @@
                 $.extend(config, options);
             }
         }
-
     }
 
     DatePicker();

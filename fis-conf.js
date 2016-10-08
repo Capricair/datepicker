@@ -1,6 +1,14 @@
 fis.config.merge({
 	project: {
-		include:["src/**"],
+		exclude:[
+			"**.sln", 
+			"**.suo", 
+			"**.config", 
+			"**.cmd", 
+			"**.rar", 
+			/\/\.idea\//i, 
+			/\/\.git\//i
+		],
 		fileType: {
 			text: ["es6", "shtml"]
 		}
