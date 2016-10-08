@@ -29,9 +29,8 @@
 ```
 5、可以监听当前input值的变化吗？当然可以！
 ```JavaScript
-var myInput = document.querySelector("#inputId");
-myInput.addEventListener("change", function(){
-	// todo your code here
+input.addEventListener("change", function(){
+	// your code
 	...
 }, false);
 ```
