@@ -1,5 +1,5 @@
 # DatePicker
-移动端滚动式日期控件，带平滑滚动效果，超小体积，原生js编写，不依赖任何第三方文件，绝不含任何添加剂。
+移动端滚动式日期控件，带平滑滚动效果，超小体积，原生js编写，不依赖任何第三方文件。
 
 ## 快速开始
 1、引入文件
@@ -29,3 +29,6 @@
 ```HTML
 <input type="text" role="datepicker" data-format="yyyy-MM" readonly />
 ```
+
+## 预览地址
+[datepicker demo](http://htmlpreview.github.io/?https://github.com/Capricair/datepicker/blob/master/output/min/demo.html)
