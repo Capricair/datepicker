@@ -14,9 +14,18 @@
 		<script src="path/to/datepicker.js"></script>
 	</body>
 </html>
-
 ```
 2、使用
+在input上加上role="datepicker"，就这么简单
 ```HTML
-<input type="text" role="datepicker" data-format="yyyy-MM-dd" readonly />
+<input type="text" role="datepicker" readonly />
+```
+3、格式化
+日期格式默认为 yyyy-MM-dd 格式，如果你想换格式，添加 data-format="yyyy/MM/dd" 就可以了
+```HTML
+<input type="text" role="datepicker" data-format="yyyy/MM/dd" readonly />
+```
+4、如果你只想选年月，将格式化修改为：data-format="yyyy-MM"
+```HTML
+<input type="text" role="datepicker" data-format="yyyy-MM" readonly />
 ```
