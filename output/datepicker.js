@@ -617,6 +617,8 @@
                     var evt = EVENTS.find(el, eventName);
                     if (evt) {
                         evt.handle.apply(el, args);
+                    } else {
+                        el.dispatchEvent(new Event(eventName));
                     }
                 });
                 return that;
@@ -694,6 +696,7 @@
             $container.on("datepicker.value.changed", function (e) {
                 checkDateValid();
                 setInputValue();
+                $input.trigger("change");
             });
 
             $(document).on(clickEvent, function (e) {
