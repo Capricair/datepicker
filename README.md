@@ -29,3 +29,6 @@
 ```HTML
 <input type="text" role="datepicker" data-format="yyyy-MM" readonly />
 ```
+
+## 预览地址
+[datepicker demo](http://htmlpreview.github.io/?https://github.com/Capricair/datepicker/blob/master/output/min/demo.html)
