@@ -45,7 +45,7 @@
             var baseHTML = `<div id="datepicker" class="datepicker-container">
                                 <div class="datepicker-wrapper">
                                     <div class="datepicker-head">
-                                        <a href="javascript:;" class="btn-cancel">取消111</a>
+                                        <a href="javascript:;" class="btn-cancel">取消</a>
                                         <a href="javascript:;" class="btn-confirm" data-dismiss="datepicker">确定</a>
                                     </div>
                                     <div class="datepicker-body">

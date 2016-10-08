@@ -28,7 +28,7 @@ fis.config.merge({
 		}
 	},
 	pack: {
-		"pkg/css/basic.css": [
+		"pkg/css/base.css": [
 			"css/base/reset.css",
 			"css/base/base.scss",
 		],
