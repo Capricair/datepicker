@@ -31,4 +31,4 @@
 ```
 
 ## 预览地址
-[datepicker demo](http://htmlpreview.github.io/?https://github.com/Capricair/datepicker/blob/master/output/min/demo.html "title\" target="_blank")
+[datepicker demo](http://htmlpreview.github.io/?https://github.com/Capricair/datepicker/blob/master/output/min/demo.html)
