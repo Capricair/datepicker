@@ -625,7 +625,8 @@
                     if (evt){
                         evt.handle.apply(el, args);
                     } else {
-                        el.dispatchEvent(new Event(eventName));
+                        if (!EVENTS[eventName]) EVENTS[eventName] = new Event(eventName);
+                        el.dispatchEvent(EVENTS[eventName]);
                     }
                 });
                 return that;
@@ -655,9 +656,8 @@
                 var events = [];
                 events.find = function (target, eventName) {
                     for (var i=0; i<this.length; i++){
-                        var evt = EVENTS[i];
-                        if (evt.target === target && evt.event === eventName){
-                            return evt;
+                        if (EVENTS[i].target === target && EVENTS[i].event === eventName){
+                            return EVENTS[i];
                         }
                     }
                 };
