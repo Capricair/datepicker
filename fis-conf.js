@@ -29,18 +29,9 @@ fis.config.merge({
 		}
 	},
 	pack: {
-		"pkg/css/base.css": [
-			"css/base/reset.css",
-			"css/base/base.scss",
-		],
-		"pkg/css/main.css": [
-			"css/fonts/icomoon/style.css",
-			"css/struct/custom.scss",
-			"css/struct/layout.scss"
-		],
-		"pkg/js/lib.js": [
-			"js/jquery/jquery-1.11.2.js",
-			"js/fastclick/fastclick.js"
+		"datepicker.js": [
+			"src/modules/iQuery.js",
+			"src/datepicker.es6"
 		]
 	},
 	settings: {

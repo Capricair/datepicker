@@ -5,12 +5,30 @@
             "type": "js",
             "deps": [
                 "src/datepicker.scss"
-            ]
+            ],
+            "pkg": "p0"
         },
         "src/datepicker.scss": {
             "uri": "datepicker.css",
             "type": "css"
+        },
+        "src/modules/iQuery.js": {
+            "uri": "modules/iQuery.js",
+            "type": "js",
+            "pkg": "p0"
         }
     },
-    "pkg": {}
+    "pkg": {
+        "p0": {
+            "uri": "/datepicker.js",
+            "type": "js",
+            "has": [
+                "src/modules/iQuery.js",
+                "src/datepicker.es6"
+            ],
+            "deps": [
+                "src/datepicker.scss"
+            ]
+        }
+    }
 }
