@@ -27,13 +27,6 @@
 ```HTML
 <input type="text" role="datepicker" data-format="yyyy-MM" readonly />
 ```
-5、可以监听当前input值的变化吗？当然可以！
-```JavaScript
-input.addEventListener("change", function(){
-	// your code
-	...
-}, false);
-```
 
 ## 预览地址
 [Datepicker Demo](http://htmlpreview.github.io/?https://github.com/Capricair/datepicker/blob/master/output/min/demo.html)
