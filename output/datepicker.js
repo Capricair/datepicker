@@ -328,7 +328,7 @@
 
             $(document).on(clickEvent, function (e) {
                 var $target = $(e.target);
-                if (touch.x !== e.changedTouches[0].clientX || touch.y !== e.changedTouches[0].clientY || new Date().getTime() - touch.timestamp > 100) {
+                if (touch.x !== e.changedTouches[0].clientX || touch.y !== e.changedTouches[0].clientY || new Date().getTime() - touch.timestamp > 160) {
                     return;
                 }
                 if ($datepickers.indexOf(e.target) > -1) {
