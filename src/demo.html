@@ -44,16 +44,9 @@
             <input id="txtDate1" type="text" role="datepicker" data-format="yyyy/MM" readonly />
         </div>
     </div>
-    <script src="modules/iQuery.js"></script>
     <script src="datepicker.es6"></script>
     <script>
-        var inputs = document.querySelectorAll("input");
-        for (var i=0; i<inputs.length; i++){
-            inputs[i].addEventListener("input", inputChangeHandler, false);
-        }
-        function inputChangeHandler() {
-            console.log("input value changed!");
-        }
+
     </script>
 </body>
 </html>
