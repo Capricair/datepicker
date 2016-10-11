@@ -29,10 +29,10 @@ fis.config.merge({
 		}
 	},
 	pack: {
-		"datepicker.js": [
+		/*"datepicker.js": [
 			"src/modules/iQuery.js",
 			"src/datepicker.es6"
-		]
+		]*/
 	},
 	settings: {
 		spriter: {
