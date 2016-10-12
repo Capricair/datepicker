@@ -346,25 +346,21 @@
                     $input = $target;
                     var unitedValue = $input.val().replace(/-/g, "/"); //iOS只识别yyyy/MM/dd格式
                     var date = new Date(unitedValue);
+
                     //控制是否显示月份和日期选择
-                    var format = getFormat();
-                    $year.show();
-                    $month.show();
-                    $day.show();
-                    if (!/d+/.test(format)){
-                        $day.hide();
-                    }
-                    if (!/M+/.test(format)){
-                        $month.hide();
-                    }
+                    setControlsVisible();
+
                     //设置input默认值，用于点击取消后恢复原始值
                     $input.attr("data-default-value", $input.val());
+
                     //如果日期不正确，则获取当前日期
                     if (isNaN(date.getDate())){
                         date = new Date();
                     }
+
                     //设置日期控件当前日期
                     controls.setDate(date, false);
+
                     //给当前input赋值
                     setInputValue();
                 }
@@ -389,6 +385,19 @@
                 $input.val($input.attr("data-default-value"));
                 closeDatePicker();
             });
+
+            function setControlsVisible() {
+                var format = getFormat();
+                $year.show();
+                $month.show();
+                $day.show();
+                if (!/d+/.test(format)){
+                    $day.hide();
+                }
+                if (!/M+/.test(format)){
+                    $month.hide();
+                }
+            }
 
             function getFormat() {
                 return $input.attr("data-format") || "yyyy-MM-dd";
@@ -817,11 +826,7 @@
         }
 
         function nodeListToArray(nodeList) {
-            var arr = [];
-            for (var i=0; i<nodeList.length; i++){
-                arr.push(nodeList[i]);
-            }
-            return arr;
+            return Array.prototype.slice.call(nodeList, 0);
         }
 
         function parseHTML(str) {

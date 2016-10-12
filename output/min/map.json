@@ -1,1 +1,1 @@
-{"res":{"src/datepicker.es6":{"uri":"datepicker.js","type":"js","extras":{},"deps":["src/datepicker.scss"],"pkg":"p0"},"src/datepicker.scss":{"uri":"datepicker.css","type":"css"}},"pkg":{"p0":{"uri":"/datepicker.js","type":"js","has":["src/datepicker.es6"],"deps":["src/datepicker.scss"]}}}
+{"res":{"src/datepicker.es6":{"uri":"datepicker.js","type":"js","extras":{},"deps":["src/datepicker.scss"]},"src/datepicker.scss":{"uri":"datepicker.css","type":"css"}},"pkg":{}}
