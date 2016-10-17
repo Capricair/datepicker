@@ -4,16 +4,11 @@
 ## 快速开始
 1、引入文件
 ```HTML
-<html>
-	<head>
-		...
-		<link rel="stylesheet" href="path/to/datepicker.css" />
-	</head>
-	<body>
-		...
-		<script src="path/to/datepicker.js"></script>
-	</body>
-</html>
+<!-- 样式文件 -->
+<link rel="stylesheet" href="path/to/datepicker.css" />
+
+<!-- 脚本文件 -->
+<script src="path/to/datepicker.js"></script>
 ```
 2、在input上加上role="datepicker"，就这么简单
 ```HTML
