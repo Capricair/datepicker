@@ -336,12 +336,16 @@
             });
 
             $(document).on(clickEvent, function (e) {
+
                 var $target = $(e.target);
-                if (touch.x !== e.changedTouches[0].clientX
+
+                //移动端判断是滑动还是点击
+                if (isMobile && (touch.x !== e.changedTouches[0].clientX
                     || touch.y !== e.changedTouches[0].clientY
-                    || new Date().getTime() - touch.timestamp > 160){
+                    || new Date().getTime() - touch.timestamp > 160)){
                     return;
                 }
+
                 if ($datepickers.indexOf(e.target) > -1){
                     $input = $target;
                     var unitedValue = $input.val().replace(/-/g, "/"); //iOS只识别yyyy/MM/dd格式
@@ -852,7 +856,6 @@
     }
 
     $.extend = _extend;
-
     DatePicker();
 
 })();
