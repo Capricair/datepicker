@@ -79,11 +79,11 @@
                 var $target = $(e.target);
                 if ($target.closest("#datepicker").length > 0 && config.opened) {
                     if (e.type === touchEvents[0]) {
-                        $target.closest("ul").parent().trigger("datepicker.scroll.touchstart", [e]);
+                        $target.closest("ul").parent().trigger("datepicker.scroll.touchstart", e);
                     } else if (e.type === touchEvents[1] && isMouseDown) {
-                        $target.closest("ul").parent().trigger("datepicker.scroll.touchmove", [e]);
+                        $target.closest("ul").parent().trigger("datepicker.scroll.touchmove", e);
                     } else if (e.type === touchEvents[2]) {
-                        $target.closest("ul").parent().trigger("datepicker.scroll.touchend", [e]);
+                        $target.closest("ul").parent().trigger("datepicker.scroll.touchend", e);
                     }
                     // 阻止页面滚动
                     e.preventDefault();
@@ -774,11 +774,12 @@
             }, useCapture);
         };
 
-        this.trigger = function (eventName, args) {
+        this.trigger = function (eventName) {
+            var args = arguments;
             that.elements.forEach(function (el) {
                 var evt = EVENTS.find(el, eventName);
                 if (evt) {
-                    evt.handle.apply(el, args);
+                    evt.handle.apply(el, Array.prototype.slice.call(args, 1));
                 } else {
                     if (!EVENTS[eventName]) EVENTS[eventName] = new Event(eventName);
                     el.dispatchEvent(EVENTS[eventName]);
