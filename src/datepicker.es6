@@ -792,7 +792,7 @@
                 } else {
                     if (!EVENTS[eventName])
                         EVENTS[eventName] = new Event(eventName);
-                    el.dispatchEvent(EVENTS[eventName]); 
+                    el.dispatchEvent(EVENTS[eventName]);
                 }
             });
             return that;
