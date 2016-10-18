@@ -788,7 +788,7 @@
             that.elements.forEach(function (el) {
                 var evt = EVENTS.find(el, eventName);
                 if (evt){
-                    evt.handle.apply(el, Array.prototype.slice.call(args, 1) );
+                    evt.handle.apply(el, Array.prototype.slice.call(args, 1));
                 } else {
                     if (!EVENTS[eventName])
                         EVENTS[eventName] = new Event(eventName);
