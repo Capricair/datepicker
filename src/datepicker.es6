@@ -347,7 +347,9 @@
                 }
 
                 if ($datepickers.indexOf(e.target) > -1){
+
                     $input = $target;
+
                     var unitedValue = $input.val().replace(/-/g, "/"); //iOS只识别yyyy/MM/dd格式
                     var date = new Date(unitedValue);
 
@@ -690,11 +692,9 @@
         };
 
         this.children = function (selector) {
-            var list = [];
-            that.elements.forEach(function (el) {
-                list.push(el.children);
-            });
-            return $(list);
+            return $(that.elements.map(function (el) {
+                return el.children;
+            }));
         };
 
         this.each = function (callback) {
