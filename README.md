@@ -22,6 +22,10 @@
 ```HTML
 <input type="text" role="datepicker" data-format="yyyy-MM" readonly />
 ```
+5、想要初始值，简单
+```HTML
+<input type="text" role="datepicker" value="2016-10-10" readonly />
+```
 
 ## 预览地址
 [Datepicker Demo](http://htmlpreview.github.io/?https://github.com/Capricair/datepicker/blob/master/output/min/demo.html)
