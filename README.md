@@ -14,11 +14,11 @@
 ```HTML
 <input type="text" role="datepicker" readonly />
 ```
-3、日期格式默认为 yyyy-MM-dd 格式，如果你想换格式，添加 data-format="yyyy/MM/dd" 就可以了
+3、日期格式默认为 yyyy-MM-dd 格式，如果你想换格式，添加 data-format
 ```HTML
 <input type="text" role="datepicker" data-format="yyyy/MM/dd" readonly />
 ```
-4、如果你只想选年月，将格式化修改为：data-format="yyyy-MM"
+4、如果你只想选年月
 ```HTML
 <input type="text" role="datepicker" data-format="yyyy-MM" readonly />
 ```
