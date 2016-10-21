@@ -16,7 +16,7 @@
 ```
 
 ## 更多功能
-1、日期格式默认为 yyyy-MM-dd 格式，如果你想换格式，添加 data-format
+1、日期格式默认为 yyyy-MM-dd，如果你想自定义格式，添加 data-format
 ```HTML
 <input type="text" role="datepicker" data-format="yyyy/MM/dd" readonly />
 ```
