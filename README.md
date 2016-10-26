@@ -30,4 +30,5 @@
 ```
 
 ## 预览地址
+注：使用github自带预览地址，加载速度比较慢，点击输入框没反应的童鞋请耐心等待
 [Datepicker Demo](http://htmlpreview.github.io/?https://github.com/Capricair/datepicker/blob/master/output/min/demo.html)
